@@ -15,10 +15,10 @@ class EditableExtension(Extension):
         _db = self.environment.edits
 
         # Skip begining node
-        parser.stream.next()
+        parser.stream.__next__()
 
         # Get section key
-        key = parser.parse_expression().value
+        key = parser.parse_expression().name
 
         # Read editable section
         section = parser.parse_statements(['name:endeditable'], drop_needle=True)

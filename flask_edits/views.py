@@ -18,6 +18,7 @@ from flask import (
 
 edits = Blueprint('edits', __name__, template_folder='templates', static_folder='static')
 
+
 @edits.route('/', defaults={'page': None})
 @edits.route('/<path:page>')
 def index(page):
@@ -25,7 +26,7 @@ def index(page):
 
     if _db:
         if not page:
-            page = _db.iterkeys().next()
+            page = next(iter(_db.keys()))
     else:
         page = None
 
@@ -34,6 +35,7 @@ def index(page):
                            page=page,
                            summernote=current_app.config['EDITS_SUMMERNOTE'],
                            preview=current_app.jinja_env.edits_preview)
+
 
 @edits.route('/preview', methods=['POST'])
 def preview():
@@ -51,6 +53,7 @@ def preview():
         current_app.jinja_env.cache.clear()
 
     return ''
+
 
 @edits.route('/save', methods=['POST'])
 def save():
